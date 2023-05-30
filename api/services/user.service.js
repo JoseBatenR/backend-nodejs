@@ -1,15 +1,17 @@
-const boom = require('@hapi/boom');
-const getConnection = require('../../libs/postgress');
 
-class UserService {
-  constructor() { }
+const ServiceBase = require('../services/service');
+
+class UserService extends ServiceBase {
+  constructor() {
+    super();
+  }
   async create(data) {
     return data;
   }
   async find() {
-    const client = await getConnection();
-    const rta = await client.query('SELECT * FROM tasks');
-    return rta.rows;
+    const query = 'SELECT * FROM TASKS';
+    const response = await this.pool.query(query);
+    return response.rows;
   }
   async findOne(id) {
     return { id };

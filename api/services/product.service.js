@@ -2,8 +2,11 @@
 const { faker } = require('@faker-js/faker');
 const boom = require('@hapi/boom');
 
-class ProductsService {
+const ServiceBase = require('../services/service')
+
+class ProductsService extends ServiceBase {
   constructor() {
+    super();
     this.products = [];
     this.generate();
   }
@@ -33,12 +36,9 @@ class ProductsService {
   }
 
   async find() {
-    return new Promise((resolve,reject)=>{
-      setTimeout(()=>{
-        resolve(this.products);
-      },5000);
-
-    });
+    const query = 'SELECT * FROM TASKS';
+    const response = await this.pool.query(query);
+    return response.rows;
   }
 
   async findOne(id) {

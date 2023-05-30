@@ -1,15 +1,18 @@
-const boom = require('@hapi/boom');
+const ServiceBase = require('../services/service')
 
-class CategoryService {
+class CategoryService extends ServiceBase {
 
   constructor(){
+    super();
   }
   async create(data) {
     return data;
   }
 
   async find() {
-    return [];
+    const query = 'SELECT * FROM TASKS';
+    const response = await this.pool.query(query);
+    return response.rows;
   }
 
   async findOne(id) {
