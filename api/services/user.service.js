@@ -1,5 +1,5 @@
 const boom = require('@hapi/boom');
-const { use } = require('../routes/users.router');
+const crypto = require('crypto');
 const ServiceBase = require('../services/service');
 
 class UserService extends ServiceBase {

@@ -3,10 +3,10 @@ const USER_TABLE = 'users';
 
 const UserSchema = {
   id: {
+    type: DataTypes.UUIDV4,
+    defaultValue:  DataTypes.UUIDV4,
     allowNull: false,
-    primaryKey: true,
-    type: Sequelize.UUID,
-    defaultValue:  Sequelize.literal('gen_random_uuid()')
+    primaryKey: true
   },
   email: {
     allowNull: false,

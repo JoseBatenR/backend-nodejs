@@ -24,7 +24,7 @@ function boomErrorHandler(error, request, response, next) {
 
 }
 
-const queryErrorHandler = (error, request, response, next) => {
+const ormErrorHandler = (error, request, response, next) => {
   if (error instanceof ValidationError) {
     response.status(409).json({
       statusCode: 409,
@@ -35,4 +35,4 @@ const queryErrorHandler = (error, request, response, next) => {
   next(error);
 }
 
-module.exports = { logErrors, errorHandler, boomErrorHandler, queryErrorHandler };
+module.exports = { logErrors, errorHandler, boomErrorHandler, ormErrorHandler };
