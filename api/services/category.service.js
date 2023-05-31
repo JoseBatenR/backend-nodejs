@@ -1,8 +1,10 @@
 const ServiceBase = require('../services/service')
 
+const sequalize = require('../../libs/sequalize');
+
 class CategoryService extends ServiceBase {
 
-  constructor(){
+  constructor() {
     super();
   }
   async create(data) {
@@ -11,8 +13,8 @@ class CategoryService extends ServiceBase {
 
   async find() {
     const query = 'SELECT * FROM TASKS';
-    const response = await this.pool.query(query);
-    return response.rows;
+    const [data] = await this.sequalize.query(query);
+    return data;
   }
 
   async findOne(id) {

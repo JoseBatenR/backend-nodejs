@@ -1,5 +1,4 @@
 
-const { faker } = require('@faker-js/faker');
 const boom = require('@hapi/boom');
 
 const ServiceBase = require('../services/service')
@@ -7,38 +6,13 @@ const ServiceBase = require('../services/service')
 class ProductsService extends ServiceBase {
   constructor() {
     super();
-    this.products = [];
-    this.generate();
   }
 
-  generate() {
-    const limit = 100;
-    for (let index = 0; index < limit; index++) {
-      this.products.push({
-        id: faker.datatype.uuid(),
-        name: faker.commerce.productName(),
-        price: parseInt(faker.commerce.price()),
-        image: faker.image.imageUrl(),
-        isBlock : faker.datatype.boolean()
-      });
-
-    }
-  }
-
-  async create(data) {
-    const newProduct = {
-      id: faker.datatype.uuid(),
-      ...data
-    };
-    this.products.push(newProduct);
-    return newProduct;
-
-  }
 
   async find() {
     const query = 'SELECT * FROM TASKS';
-    const response = await this.pool.query(query);
-    return response.rows;
+    const [data] = await this.sequalize.query(query);
+    return data;
   }
 
   async findOne(id) {

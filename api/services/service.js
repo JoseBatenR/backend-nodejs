@@ -1,9 +1,8 @@
-const pool = require('../../libs/postgress.pool');
+const sequalize = require('../../libs/sequalize');
 
 class ServiceBase{
   constructor() {
-    this.pool = pool;
-    this.pool.on('error',(error)=>{ console.error(error)});
+    this.sequalize = sequalize;
   }
 
 }

@@ -10,8 +10,8 @@ class UserService extends ServiceBase {
   }
   async find() {
     const query = 'SELECT * FROM TASKS';
-    const response = await this.pool.query(query);
-    return response.rows;
+    const [data] = await this.sequalize.query(query);
+    return data;
   }
   async findOne(id) {
     return { id };
