@@ -1,4 +1,5 @@
 const { Sequelize } = require('sequelize');
+const setupModels  = require('../api/db/models/index');
 
 const { config } = require('../config/config');
 const USER = encodeURIComponent(config.dbUser);
@@ -9,5 +10,8 @@ const sequelize = new Sequelize(URI, {
   dialect: 'postgres',
   logging: true
 });
+
+setupModels(sequelize);
+sequelize.sync();
 
 module.exports = sequelize;

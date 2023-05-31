@@ -1,8 +1,8 @@
-const sequalize = require('../../libs/sequalize');
+const { models } = require('../../libs/sequalize');
 
 class ServiceBase{
   constructor() {
-    this.sequalize = sequalize;
+    this.models = models;
   }
 
 }

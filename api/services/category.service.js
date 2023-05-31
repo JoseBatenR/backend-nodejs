@@ -1,7 +1,5 @@
 const ServiceBase = require('../services/service')
 
-const sequalize = require('../../libs/sequalize');
-
 class CategoryService extends ServiceBase {
 
   constructor() {
