@@ -3,8 +3,8 @@ const USER_TABLE = 'users';
 
 const UserSchema = {
   id: {
-    type: DataTypes.UUIDV4,
-    defaultValue:  DataTypes.UUIDV4,
+    type: Sequelize.UUID,
+    defaultValue: Sequelize.UUIDV4,
     allowNull: false,
     primaryKey: true
   },
@@ -21,7 +21,7 @@ const UserSchema = {
     allowNull: false,
     type: DataTypes.DATE,
     field: 'create_at',
-    defaultValue: Sequelize.literal('NOW()')
+    defaultValue: Sequelize.NOW
   }
 }
 class User extends Model {

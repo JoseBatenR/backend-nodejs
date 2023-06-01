@@ -1,5 +1,4 @@
 const boom = require('@hapi/boom');
-const crypto = require('crypto');
 const ServiceBase = require('../services/service');
 
 class UserService extends ServiceBase {
@@ -7,6 +6,7 @@ class UserService extends ServiceBase {
     super();
   }
   async create(data) {
+
     const newUser = await this.models.User.create(data);
     return newUser;
   }
@@ -16,7 +16,6 @@ class UserService extends ServiceBase {
   }
   async findOne(id) {
     const user = await this.models.User.findByPk(id);
-    console.log(user);
     if (!user) {
       throw  boom.notFound('User not found');
     }

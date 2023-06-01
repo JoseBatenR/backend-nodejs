@@ -4,10 +4,11 @@ const setupModels  = require('../api/db/models/index');
 const { config } = require('../config/config');
 const USER = encodeURIComponent(config.dbUser);
 const PASSWORD = encodeURIComponent(config.dbPassword);
-const URI = `mysql://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
+const DB_CLIENT = encodeURIComponent(config.dbClient);
+const URI = `${DB_CLIENT}://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
 
 const sequelize = new Sequelize(URI, {
-  dialect: 'mysql',
+  dialect: DB_CLIENT,
   logging: true
 });
 
