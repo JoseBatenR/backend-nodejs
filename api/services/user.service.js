@@ -11,7 +11,9 @@ class UserService extends ServiceBase {
     return newUser;
   }
   async find() {
-    const data = await this.models.User.findAll();
+    const data = await this.models.User.findAll({
+      include : ['customer']
+    });
     return data;
   }
   async findOne(id) {

@@ -6,7 +6,9 @@ class CustomerService extends ServiceBase {
   }
 
   async find() {
-    const rta = await this.models.Customer.findAll();
+    const rta = await this.models.Customer.findAll({
+      include : ['user']
+    });
     return rta;
   }
 
@@ -19,7 +21,9 @@ class CustomerService extends ServiceBase {
   }
 
   async create(data) {
-    const newCustomer = await this.models.Customer.create(data);
+        const newCustomer = await this.models.Customer.create(data,{
+          include: ['user']
+        });
     return newCustomer;
   }
 
