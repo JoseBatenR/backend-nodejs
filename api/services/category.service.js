@@ -6,28 +6,37 @@ class CategoryService extends ServiceBase {
     super();
   }
   async create(data) {
-    return data;
+    const newCategory = await this.models.Category.create(data);
+    return newCategory;
   }
 
   async find() {
-    const query = 'SELECT * FROM TASKS';
-    const [data] = await this.sequalize.query(query);
-    return data;
+    const products = await this.models.Category.findAll();
+    return products;
   }
 
   async findOne(id) {
-    return { id };
+    const categorie = await this.models.Category.findByPk(id,
+      {
+        include: ['products']
+      });
+    if (!categorie) {
+      throw this.boom.notFound('Categorie not found');
+    }
+    return categorie;
   }
 
   async update(id, changes) {
-    return {
-      id,
-      changes,
-    };
+    const model = await this.findOne(id);
+    const modelUpdate = await model.update(changes);
+    //const
+    return modelUpdate;
   }
 
   async delete(id) {
-    return { id };
+    const model = await this.findOne(id);
+    await model.destroy();
+    return { response: true };
   }
 
 }

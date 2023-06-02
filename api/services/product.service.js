@@ -8,48 +8,38 @@ class ProductsService extends ServiceBase {
     super();
   }
 
+  async create(data){
+    const newProduct = await this.models.Product.create(data);
+    return newProduct;
+  }
 
   async find() {
-    const query = 'SELECT * FROM TASKS';
-    const [data] = await this.sequalize.query(query);
-    return data;
+    const products = await this.models.Product.findAll();
+    return products;
   }
 
   async findOne(id) {
-    const producto = this.products.find(item => item.id == id);
+    const producto = await this.models.Product.findByPk(id,{
+      include:['category']
+    });
     if(!producto)
     {
       throw boom.notFound('Product not found');
-    }
-    if(producto.isBlock){
-      throw boom.conflict('Product is blocked');
     }
     return producto;
   }
 
   async update(id, changes) {
-    const index = this.products.findIndex(item => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('Product not found');
-    }
-    const product = this.products[index];
-
-    this.products[index] = {
-      ...product,
-      ...changes
-    };
-
-    return this.products[index];
+    const model = await this.findOne(id);
+    const modelUpdate = await model.update(changes);
+    //const
+    return modelUpdate;
   }
 
   async delete(id) {
-    const index = this.products.findIndex(item => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('Product not found');
-    }
-
-    this.products.splice(index, 1);
-    return { id };
+    const model = await this.findOne(id);
+    await model.destroy();
+    return { rta: true };
   }
 }
 module.exports = ProductsService;
