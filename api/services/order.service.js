@@ -20,6 +20,7 @@ class OrderService extends ServiceBase {
   async findOne(id) {
     const order = await this.models.Order.findByPk(id, {
       include: [
+        'items',
         {
           association: 'customer',
           include: ['user']
