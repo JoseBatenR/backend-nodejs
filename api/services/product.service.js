@@ -8,22 +8,30 @@ class ProductsService extends ServiceBase {
     super();
   }
 
-  async create(data){
+  async create(data) {
     const newProduct = await this.models.Product.create(data);
     return newProduct;
   }
 
-  async find() {
-    const products = await this.models.Product.findAll();
+  async find(query) {
+    const options = {
+      include: ['category']
+    };
+    const { limit, offset } = query;
+    if (limit && offset) {
+      options.limit = limit;
+      options.offset = offset;
+    }
+
+    const products = await this.models.Product.findAll(options);
     return products;
   }
 
   async findOne(id) {
-    const producto = await this.models.Product.findByPk(id,{
-      include:['category']
+    const producto = await this.models.Product.findByPk(id, {
+      include: ['category']
     });
-    if(!producto)
-    {
+    if (!producto) {
       throw boom.notFound('Product not found');
     }
     return producto;
