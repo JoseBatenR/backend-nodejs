@@ -2,15 +2,15 @@ const { Sequelize } = require('sequelize');
 const setupModels  = require('../api/db/models/index');
 
 const { config } = require('../config/config');
-const USER = encodeURIComponent(config.dbUser);
-const PASSWORD = encodeURIComponent(config.dbPassword);
-const DB_CLIENT = encodeURIComponent(config.dbClient);
-const URI = `${DB_CLIENT}://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
 
-const sequelize = new Sequelize(URI, {
-  dialect: DB_CLIENT,
+const dialect = 'postgres';
+
+const options = {
+  dialect: dialect,
   logging: true
-});
+}
+
+const sequelize = new Sequelize(config.dbUrl, options);
 
 setupModels(sequelize);
 //sequelize.sync();

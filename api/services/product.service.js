@@ -14,14 +14,34 @@ class ProductsService extends ServiceBase {
   }
 
   async find(query) {
-    const options = {
-      include: ['category']
-    };
     const { limit, offset } = query;
+
+    const options = {
+      include: ['category'],
+      where: {}
+    };
+
+
+
     if (limit && offset) {
       options.limit = limit;
       options.offset = offset;
     }
+
+    const {price} = query;
+    if(price){
+      options.where.price = price;
+    }
+
+    const {price_min, price_max} = query;
+
+    if(price_min && price_max){
+      options.where.price = {
+        [this.Op.gte]: price_min,
+        [this.Op.lte]: price_max
+      }
+    }
+
 
     const products = await this.models.Product.findAll(options);
     return products;
