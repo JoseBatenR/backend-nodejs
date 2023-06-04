@@ -1,13 +1,20 @@
 const boom = require('@hapi/boom');
 const ServiceBase = require('../services/service');
+const bycript = require('bcrypt');
 
 class UserService extends ServiceBase {
   constructor() {
     super();
   }
   async create(data) {
+    const hash = await bycript.hash(data.password,10);
+    const newUser = await this.models.User.create({
+      ...data,
+      password : hash
+    });
+    /* Eliminar password del modelo*/
+    delete newUser.dataValues.password;
 
-    const newUser = await this.models.User.create(data);
     return newUser;
   }
   async find() {

@@ -1,4 +1,5 @@
 const ServiceBase = require('../services/service');
+const bycript = require('bcrypt');
 
 class CustomerService extends ServiceBase {
   constructor() {
@@ -7,7 +8,7 @@ class CustomerService extends ServiceBase {
 
   async find() {
     const rta = await this.models.Customer.findAll({
-      include : ['user']
+      include: ['user']
     });
     return rta;
   }
@@ -21,9 +22,22 @@ class CustomerService extends ServiceBase {
   }
 
   async create(data) {
-        const newCustomer = await this.models.Customer.create(data,{
-          include: ['user']
-        });
+    const hash = await bycript.hash(data.user.password, 10);
+    const newData = {
+      ...data,
+      user: {
+        ...data.user,
+        password: hash
+      }
+    };
+
+    const newCustomer = await this.models.Customer.create(newData, {
+      include: ['user']
+    });
+
+    /* Eliminar password del modelo*/
+    delete newCustomer.dataValues.user.dataValues.password;
+
     return newCustomer;
   }
 
