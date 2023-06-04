@@ -7,7 +7,7 @@ const dialect = 'postgres';
 
 const options = {
   dialect: dialect,
-  logging: true
+  logging: false
 }
 
 const sequelize = new Sequelize(config.dbUrl, options);

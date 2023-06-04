@@ -1,7 +1,8 @@
 const express = require('express');
 const routerApi = require('./routes');
 const cors = require('cors');
-const { logErrors, errorHandler,boomErrorHandler, ormErrorHandler } = require('./middlewares/error.handler');
+const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('./middlewares/error.handler');
+const { checkApiKey } = require('../api/middlewares/auth.handles');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -10,10 +11,10 @@ app.use(express.json());
 
 const whiteList = ['http://localhost:3000', 'https://myapp.com.gt'];
 const options = {
-  origin : (origin,callback) =>{
-    if(whiteList.includes(origin) || !origin){
-      callback(null,true);
-    }else{
+  origin: (origin, callback) => {
+    if (whiteList.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
       callback(new Error('No permitido'));
     }
   }
@@ -21,8 +22,12 @@ const options = {
 
 app.use(cors(options));
 
-app.get('/api', (request,response)=>{
+app.get('/api', (request, response) => {
   response.send("Server en express");
+});
+
+app.get('/ruta-protegida', checkApiKey, (req, res) => {
+  res.send('Hola, soy una nueva ruta');
 });
 
 routerApi(app);
