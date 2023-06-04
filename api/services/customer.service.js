@@ -1,5 +1,4 @@
 const ServiceBase = require('../services/service');
-const bycript = require('bcrypt');
 
 class CustomerService extends ServiceBase {
   constructor() {

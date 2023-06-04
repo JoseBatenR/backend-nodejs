@@ -15,6 +15,14 @@ class UserService extends ServiceBase {
     });
     return data;
   }
+
+  async findByEmail(email) {
+    const data = await this.models.User.scope("withPassword").findOne({
+      where: { email }
+    });
+    return data;
+  }
+
   async findOne(id) {
     const user = await this.models.User.findByPk(id);
     if (!user) {
