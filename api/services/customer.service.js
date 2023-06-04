@@ -22,16 +22,7 @@ class CustomerService extends ServiceBase {
   }
 
   async create(data) {
-    const hash = await bycript.hash(data.user.password, 10);
-    const newData = {
-      ...data,
-      user: {
-        ...data.user,
-        password: hash
-      }
-    };
-
-    const newCustomer = await this.models.Customer.create(newData, {
+    const newCustomer = await this.models.Customer.create(data, {
       include: ['user']
     });
 
