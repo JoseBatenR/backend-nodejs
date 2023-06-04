@@ -21,7 +21,7 @@ const UserSchema = {
   role: {
     allowNull: false,
     type: DataTypes.STRING,
-    defaultValue : 'customer'
+    defaultValue: 'customer'
   },
   createdAt: {
     allowNull: false,
@@ -48,6 +48,17 @@ class User extends Model {
           const password = await bcrypt.hash(user.password, 10);
           user.password = password;
         },
+        afterCreate: async (user, options) => {
+          delete user.dataValues.password;
+        }
+      },
+      defaultScope: {
+        attributes: {
+          exclude: ['password', 'createdAt']
+        }
+      },
+      scopes: {
+        withPassword: { attributes: {}, }
       }
     }
   }

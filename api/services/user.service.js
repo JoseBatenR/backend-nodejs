@@ -7,9 +7,6 @@ class UserService extends ServiceBase {
   }
   async create(data) {
     const newUser = await this.models.User.create(data);
-    /* Eliminar password del modelo*/
-    delete newUser.dataValues.password;
-
     return newUser;
   }
   async find() {

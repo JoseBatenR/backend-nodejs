@@ -26,9 +26,6 @@ class CustomerService extends ServiceBase {
       include: ['user']
     });
 
-    /* Eliminar password del modelo*/
-    delete newCustomer.dataValues.user.dataValues.password;
-
     return newCustomer;
   }
 
