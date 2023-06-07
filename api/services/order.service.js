@@ -17,6 +17,24 @@ class OrderService extends ServiceBase {
     return orders;
   }
 
+  async findByUser(userId) {
+    const orders = await this.models.Order.findAll(
+      {
+        where : {
+          '$customer.user.id$' : userId
+        },
+        include: [
+          'items',
+          {
+            association: 'customer',
+            include: ['user']
+          }
+        ]
+      }
+    );
+    return orders;
+  }
+
   async findOne(id) {
     const order = await this.models.Order.findByPk(id, {
       include: [
