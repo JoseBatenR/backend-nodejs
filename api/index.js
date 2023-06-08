@@ -2,7 +2,6 @@ const express = require('express');
 const routerApi = require('./routes');
 const cors = require('cors');
 const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('./middlewares/error.handler');
-const { checkApiKey } = require('../api/middlewares/auth.handles');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -27,9 +26,6 @@ app.get('/api', (request, response) => {
   response.send("Server en express");
 });
 
-app.get('/ruta-protegida', checkApiKey, (req, res) => {
-  res.send('Hola, soy una nueva ruta');
-});
 
 routerApi(app);
 app.use(logErrors);

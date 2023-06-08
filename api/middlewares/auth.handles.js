@@ -1,16 +1,6 @@
 const boom = require('@hapi/boom');
 const { config } = require("../../config/config");
 
-function checkApiKey(request, response, next) {
-  const apiKey = request.headers['api'];
-
-  if (apiKey === config.apiKey) {
-    next();
-  } else {
-    next(boom.unauthorized());
-  }
-}
-
 function checkAdminRole(request, response, next) {
   const user = request.user;
   if (user.role === 'admin') {
@@ -31,4 +21,4 @@ function checkRoles(...roles) {
   }
 }
 
-module.exports = { checkApiKey, checkAdminRole,checkRoles }
+module.exports = { checkAdminRole,checkRoles }
