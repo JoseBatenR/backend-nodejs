@@ -55,11 +55,12 @@ class User extends Model {
         },
         afterCreate: async (user, options) => {
           delete user.dataValues.password;
+          delete user.dataValues.recoveryToken;
         }
       },
       defaultScope: {
         attributes: {
-          exclude: ['password', 'createdAt']
+          exclude: ['password', 'createdAt','recoveryToken']
         }
       },
       scopes: {

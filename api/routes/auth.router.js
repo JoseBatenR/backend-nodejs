@@ -10,7 +10,7 @@ router.post('/login',
   async (req, res, next) => {
     try {
       const user = req.user;
-      res.json(service.signToken(user));
+      res.json(await service.signToken(user));
     } catch (error) {
       next(error);
     }
@@ -28,6 +28,20 @@ router.post('/recovery',
     }
   }
 );
+
+router.post('/change-password',
+  async (request, response, next) => {
+    try {
+      const { token, newPassword } = request.body;
+      const responseMail = await service.changePassword(token, newPassword );
+      response.json(responseMail);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+
 
 
 module.exports = router;

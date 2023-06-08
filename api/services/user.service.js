@@ -30,6 +30,16 @@ class UserService extends ServiceBase {
     }
     return user;
   }
+
+  async findOneWithAllData(id) {
+    const user = await this.models.User.scope("withPassword").findByPk(id);
+    if (!user) {
+      throw  boom.notFound('User not found');
+    }
+    return user;
+  }
+
+
   async update(id, changes) {
     const user = await this.findOne(id);
     const data = await user.update(changes);

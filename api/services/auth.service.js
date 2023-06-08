@@ -63,6 +63,25 @@ class AuthService extends ServiceBase {
 
   }
 
+  async changePassword(token,newPassword) {
+    try {
+      const payload = jwt.verify(token, config.jwtSecret);
+      const user = await service.findOneWithAllData(payload.sub);
+      if (user.recoveryToken !== token) {
+        throw this.boom.unauthorized();
+      }
+
+      await service.update(user.id, { recoveryToken : null, password: newPassword });
+
+      return { message: 'password changed' };
+
+    } catch (error) {
+      console.log(error);
+      throw this.boom.unauthorized();
+    }
+  }
+
+
   async sendMail(infoMail) {
 
     const transporter = nodemailer.createTransport({
